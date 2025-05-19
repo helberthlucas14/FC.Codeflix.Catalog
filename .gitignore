@@ -1,9 +1,9 @@
-﻿# Ignore arquivos de build
+﻿# Build
 **/bin/
 **/obj/
 **/artifacts/
 
-# IDEs e configurações de ambiente
+# IDEs e ferramentas
 .vs/
 .idea/
 .vscode/
@@ -12,7 +12,7 @@
 *.userosscache
 *.sln.docstates
 
-# Logs e temporários
+# Logs e arquivos temporários
 *.log
 *.tmp
 *.bak
@@ -20,41 +20,9 @@
 *.dmp
 *.orig
 
-# Arquivos do sistema
+# Arquivos de sistema
 .DS_Store
 Thumbs.db
 
-# Resultados de teste
-TestResults/
-**/TestResults/
-*.trx
-*.coverage
-*.coveragexml
-*.codecoverage
-
-# Entity Framework
-**/Migrations/
-
-# Arquivos de publish/deploy
-**/publish/
-**/.publish/
-
-# Gerenciadores de pacotes
-node_modules/
-npm-debug.log
-yarn-error.log
-.paket/
-paket-files/
-
-# Arquivos de configuração locais
-.env
-*.env
-
-# Rider / ReSharper / DotCover
-_ReSharper*/
-*.[Rr]e[Ss]harper
-*.DotSettings.user
-
-# Arquivos de lock antigos do .NET
-project.lock.json
-project.fragment.lock.json
+# Resultados de Teste
+TestResults
