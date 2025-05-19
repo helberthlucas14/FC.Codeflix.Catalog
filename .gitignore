@@ -1,5 +1,60 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
+﻿# Ignore arquivos de build
+**/bin/
+**/obj/
+**/artifacts/
 
-/FC.Codeflix.Catalog.sln
+# IDEs e configurações de ambiente
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs e temporários
+*.log
+*.tmp
+*.bak
+*.swp
+*.dmp
+*.orig
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Resultados de teste
+TestResults/
+**/TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.codecoverage
+
+# Entity Framework
+**/Migrations/
+
+# Arquivos de publish/deploy
+**/publish/
+**/.publish/
+
+# Gerenciadores de pacotes
+node_modules/
+npm-debug.log
+yarn-error.log
+.paket/
+paket-files/
+
+# Arquivos de configuração locais
+.env
+*.env
+
+# Rider / ReSharper / DotCover
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Arquivos de lock antigos do .NET
+project.lock.json
+project.fragment.lock.json
