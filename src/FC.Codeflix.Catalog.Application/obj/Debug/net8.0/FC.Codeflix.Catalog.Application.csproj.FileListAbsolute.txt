@@ -1,0 +1,15 @@
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\bin\Debug\net8.0\FC.Codeflix.Catalog.Application.deps.json
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\bin\Debug\net8.0\FC.Codeflix.Catalog.Application.dll
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\bin\Debug\net8.0\FC.Codeflix.Catalog.Application.pdb
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\obj\Debug\net8.0\FC.Codeflix.Catalog.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\obj\Debug\net8.0\FC.Codeflix.Catalog.Application.AssemblyInfoInputs.cache
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\obj\Debug\net8.0\FC.Codeflix.Catalog.Application.AssemblyInfo.cs
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\obj\Debug\net8.0\FC.Codeflix.Catalog.Application.csproj.CoreCompileInputs.cache
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\obj\Debug\net8.0\FC.Codeflix.Catalog.Application.dll
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\obj\Debug\net8.0\refint\FC.Codeflix.Catalog.Application.dll
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\obj\Debug\net8.0\FC.Codeflix.Catalog.Application.pdb
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\obj\Debug\net8.0\ref\FC.Codeflix.Catalog.Application.dll
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\bin\Debug\net8.0\FC.Codeflix.Catalog.Domain.dll
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\bin\Debug\net8.0\FC.Codeflix.Catalog.Domain.pdb
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\obj\Debug\net8.0\FC.Codeflix.Catalog.Application.csproj.AssemblyReference.cache
+C:\Users\Helberth\Source\Repos\FC.Codeflix.Catalog\src\FC.Codeflix.Catalog.Application\obj\Debug\net8.0\FC.Codef.C484B5C1.Up2Date
