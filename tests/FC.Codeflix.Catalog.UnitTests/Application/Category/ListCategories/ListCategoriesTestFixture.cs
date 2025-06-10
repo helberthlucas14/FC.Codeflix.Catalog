@@ -31,7 +31,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories
                     search: Faker.Commerce.ProductName(),
                     sort: Faker.Commerce.ProductName(),
                     dir: random.Next(0, 10) > 5 ?
-                        SearchOrder.ASC : SearchOrder.DESC
+                        SearchOrder.Asc : SearchOrder.Desc
             );
         }
     }

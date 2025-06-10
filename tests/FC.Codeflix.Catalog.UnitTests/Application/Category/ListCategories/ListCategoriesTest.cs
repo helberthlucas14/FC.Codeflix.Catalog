@@ -34,7 +34,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories
                  total: new Random().Next(50, 200));
 
             repositoryMock.Setup(x => x.Search(
-                It.Is<SeachInput>(searchInput => searchInput.Page == input.Page
+                It.Is<SearchInput>(searchInput => searchInput.Page == input.Page
                     && searchInput.PerPage == input.PerPage
                     && searchInput.Search == input.Search
                     && searchInput.OrderBy == input.Sort
@@ -63,7 +63,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories
                 outputItem.CreatedAt.Should().Be(repositoryCategory.CreatedAt);
             });
             repositoryMock.Verify(x => x.Search(
-                  It.Is<SeachInput>(searchInput => searchInput.Page == input.Page
+                  It.Is<SearchInput>(searchInput => searchInput.Page == input.Page
                       && searchInput.PerPage == input.PerPage
                       && searchInput.Search == input.Search
                       && searchInput.OrderBy == input.Sort
@@ -88,7 +88,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories
                  total: 0);
 
             repositoryMock.Setup(x => x.Search(
-                It.Is<SeachInput>(searchInput => searchInput.Page == input.Page
+                It.Is<SearchInput>(searchInput => searchInput.Page == input.Page
                     && searchInput.PerPage == input.PerPage
                     && searchInput.Search == input.Search
                     && searchInput.OrderBy == input.Sort
@@ -117,7 +117,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories
                 outputItem.CreatedAt.Should().Be(repositoryCategory.CreatedAt);
             });
             repositoryMock.Verify(x => x.Search(
-                  It.Is<SeachInput>(searchInput => searchInput.Page == input.Page
+                  It.Is<SearchInput>(searchInput => searchInput.Page == input.Page
                       && searchInput.PerPage == input.PerPage
                       && searchInput.Search == input.Search
                       && searchInput.OrderBy == input.Sort
@@ -147,7 +147,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories
                  total: new Random().Next(50, 200));
 
             repositoryMock.Setup(x => x.Search(
-                It.Is<SeachInput>(searchInput => searchInput.Page == input.Page
+                It.Is<SearchInput>(searchInput => searchInput.Page == input.Page
                     && searchInput.PerPage == input.PerPage
                     && searchInput.Search == input.Search
                     && searchInput.OrderBy == input.Sort
@@ -176,7 +176,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories
                 outputItem.CreatedAt.Should().Be(repositoryCategory.CreatedAt);
             });
             repositoryMock.Verify(x => x.Search(
-                  It.Is<SeachInput>(searchInput => searchInput.Page == input.Page
+                  It.Is<SearchInput>(searchInput => searchInput.Page == input.Page
                       && searchInput.PerPage == input.PerPage
                       && searchInput.Search == input.Search
                       && searchInput.OrderBy == input.Sort

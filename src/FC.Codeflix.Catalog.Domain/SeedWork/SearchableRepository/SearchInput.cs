@@ -1,13 +1,13 @@
 ﻿namespace FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository
 {
-    public class SeachInput
+    public class SearchInput
     {
         public int Page { get; set; }
         public int PerPage { get; set; }
         public string Search { get; set; }
         public string OrderBy { get; set; }
         public SearchOrder Order { get; set; }
-        public SeachInput(
+        public SearchInput(
             int page,
             int perPage,
             string search, 

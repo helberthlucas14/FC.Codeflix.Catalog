@@ -2,7 +2,7 @@
 {
     public enum SearchOrder
     {
-        ASC,
-        DESC
+        Asc,
+        Desc
     }
 }

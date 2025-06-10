@@ -15,7 +15,7 @@ namespace FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories
 
         public async Task<ListCategoriesOutput> Handle(ListCategoriesInput request, CancellationToken cancellationToken)
         {
-            var seachOutput = await _categoryRepository.Search(new SeachInput(
+            var seachOutput = await _categoryRepository.Search(new SearchInput(
                  request.Page,
                  request.PerPage,
                  request.Search,

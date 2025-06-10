@@ -11,7 +11,7 @@ namespace FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories
             int perPage = 15,
             string search = "",
             string sort = "",
-            SearchOrder dir = SearchOrder.ASC)
+            SearchOrder dir = SearchOrder.Asc)
             : base(page, perPage, search, sort, dir)
         {
         }

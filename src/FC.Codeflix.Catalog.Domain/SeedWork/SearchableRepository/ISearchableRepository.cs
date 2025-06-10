@@ -4,7 +4,7 @@
         where TAggregate : AggregateRoot
     {
         Task<SeachOutput<TAggregate>> Search(
-            SeachInput input,
+            SearchInput input,
             CancellationToken cancellationToken
             );
     }
