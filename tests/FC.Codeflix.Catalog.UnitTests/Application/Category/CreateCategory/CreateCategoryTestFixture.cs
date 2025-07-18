@@ -34,7 +34,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.Category.CreateCategory
             return invalidInputLongName;
         }
 
-        public CreateCategoryInput GetInvalidInputCategoryNull()
+        public CreateCategoryInput GetInvalidInputDescriptionNull()
         {
             var invalidInputDescriptionNull = GetInput();
             invalidInputDescriptionNull.Description = null!;
