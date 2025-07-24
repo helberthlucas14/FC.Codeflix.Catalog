@@ -31,8 +31,8 @@ namespace FC.Codeflix.Catalog.Integration.Tests.Application.UseCases.Category.Li
                 ("id", SearchOrder.Desc) => listClone.OrderByDescending(x => x.Id),
                 ("name", SearchOrder.Asc) => listClone.OrderBy(x => x.Name),
                 ("name", SearchOrder.Desc) => listClone.OrderByDescending(x => x.Name),
-                ("createdat", SearchOrder.Asc) => listClone.OrderBy(x => x.CreatedAt),
-                ("createdat", SearchOrder.Desc) => listClone.OrderByDescending(x => x.CreatedAt),
+                ("createdAt", SearchOrder.Asc) => listClone.OrderBy(x => x.CreatedAt),
+                ("createdAt", SearchOrder.Desc) => listClone.OrderByDescending(x => x.CreatedAt),
                 _ => listClone.OrderBy(x => x.Name),
             };
             return ordenredEnumerable.ToList();

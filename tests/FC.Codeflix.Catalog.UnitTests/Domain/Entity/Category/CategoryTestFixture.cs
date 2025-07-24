@@ -25,14 +25,14 @@ namespace FC.Codeflix.Catalog.UnitTests.Domain.Entity.Category
 
         public string GetValidCategoryDescription()
         {
-            var categoryDescription = "";
+            var categoryDescription = Faker.Commerce.ProductDescription();
 
             if (categoryDescription.Length > 10_000)
                 categoryDescription = categoryDescription[..10_000];
 
             return categoryDescription;
         }
-        public DomainEntity.Category GetValidCatetory()
+        public DomainEntity.Category GetValidCategory()
             => new(GetValidCategoryName(),
                GetValidCategoryDescription());
     }

@@ -1,5 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using MediatR;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory
 {

@@ -36,8 +36,8 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.ListCategories
                 ("name", SearchOrder.Desc) => listClone.OrderByDescending(x => x.Name),
                 ("id", SearchOrder.Asc) => listClone.OrderBy(x => x.Id),
                 ("id", SearchOrder.Desc) => listClone.OrderByDescending(x => x.Id),
-                ("createdat", SearchOrder.Asc) => listClone.OrderBy(x => x.CreatedAt),
-                ("createdat", SearchOrder.Desc) => listClone.OrderByDescending(x => x.CreatedAt),
+                ("createdAt", SearchOrder.Asc) => listClone.OrderBy(x => x.CreatedAt),
+                ("createdAt", SearchOrder.Desc) => listClone.OrderByDescending(x => x.CreatedAt),
                 _ => listClone.OrderBy(x => x.Name),
             };
           

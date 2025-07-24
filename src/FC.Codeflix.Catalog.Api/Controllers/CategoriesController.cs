@@ -1,3 +1,5 @@
+using FC.Codeflix.Catalog.Api.ApiModels.Category;
+using FC.Codeflix.Catalog.Api.ApiModels.Response;
 using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
 using FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
@@ -19,7 +21,7 @@ namespace FC.Codeflix.Catalog.Api.Controllers
             => _mediator = mediator;
 
         [HttpPost]
-        [ProducesResponseType(typeof(CategoryModelOutput), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<CategoryModelOutput>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> Create(
@@ -31,7 +33,7 @@ namespace FC.Codeflix.Catalog.Api.Controllers
             return CreatedAtAction(
                 nameof(Get),
                 new { output.Id },
-                output
+                new ApiResponse<CategoryModelOutput>(output)
                 );
         }
 
@@ -41,7 +43,7 @@ namespace FC.Codeflix.Catalog.Api.Controllers
         public async Task<IActionResult> GetList(
             CancellationToken cancellationToken,
             [FromQuery] int? page = null,
-            [FromQuery] int? perPage = null,
+            [FromQuery(Name = "per_page")] int? perPage = null,
             [FromQuery] string? search = null,
             [FromQuery] string? sort = null,
             [FromQuery] SearchOrder? dir = null
@@ -53,35 +55,45 @@ namespace FC.Codeflix.Catalog.Api.Controllers
             if (!String.IsNullOrWhiteSpace(search)) input.Search = search;
             if (!String.IsNullOrWhiteSpace(sort)) input.Sort = sort;
             if (dir is not null) input.Dir = dir.Value;
-            var ouput = await _mediator.Send(input, cancellationToken);
-            return Ok(ouput);
+            var output = await _mediator.Send(input, cancellationToken);
+            return Ok(new ApiResponseList<CategoryModelOutput>(output));
         }
 
         [HttpGet("{id:guid}")]
-        [ProducesResponseType(typeof(CategoryModelOutput), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<CategoryModelOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var ouput = await _mediator.Send(new GetCategoryInput(id), cancellationToken);
-            return Ok(ouput);
+            return Ok(new ApiResponse<CategoryModelOutput>(ouput));
         }
 
         [HttpPut("{id:guid}")]
-        [ProducesResponseType(typeof(CategoryModelOutput), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<CategoryModelOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> Update(
-           [FromBody] UpdateCategoryInput input,
+           [FromBody] UpdateCategoryApiInput input,
+           [FromRoute] Guid id,
             CancellationToken cancellationToken
     )
         {
-            var output = await _mediator.Send(input, cancellationToken);
-            return Ok(output);
+            var output = await _mediator.Send
+                (
+                new UpdateCategoryInput
+                (
+                    id,
+                    input.Name,
+                    input.Description,
+                    input.IsActive
+                ),
+                cancellationToken);
+            return Ok(new ApiResponse<CategoryModelOutput>(output));
         }
 
         [HttpDelete("{id:guid}")]
-        [ProducesResponseType(typeof(CategoryModelOutput), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
         {

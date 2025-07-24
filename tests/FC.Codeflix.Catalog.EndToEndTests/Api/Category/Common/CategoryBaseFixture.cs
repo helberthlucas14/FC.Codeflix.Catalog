@@ -20,19 +20,15 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.Common
         {
             var categoryName = "";
             while (categoryName.Length < 3)
-            {
                 categoryName = Faker.Commerce.Categories(1)[0];
-            }
-
             if (categoryName.Length > 255)
                 categoryName = categoryName[..255];
-
             return categoryName;
         }
 
         public string GetValidCategoryDescription()
         {
-            var categoryDescription = "";
+            var categoryDescription = Faker.Commerce.ProductDescription();
 
             if (categoryDescription.Length > 10_000)
                 categoryDescription = categoryDescription[..10_000];

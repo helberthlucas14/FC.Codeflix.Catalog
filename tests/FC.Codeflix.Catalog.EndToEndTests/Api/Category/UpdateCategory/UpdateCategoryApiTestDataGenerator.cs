@@ -20,7 +20,7 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.UpdateCategory
                 switch (i % totalInvalidCases)
                 {
                     case 0:
-                        var input = fixture.GetExampleInput(null);
+                        var input = fixture.GetExampleInput();
                         input.Name = fixture.GetInvalidINameTooShortName();
                         invalidInputsList.Add(new object[] {
                         input,
@@ -29,7 +29,7 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.UpdateCategory
                         break;
 
                     case 1:
-                        var input2 = fixture.GetExampleInput(null);
+                        var input2 = fixture.GetExampleInput();
                         input2.Name = fixture.GetInvalidITooLongName();
                         invalidInputsList.Add(new object[] {
                          input2,
@@ -38,7 +38,7 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.UpdateCategory
                         break;
 
                     case 2:
-                        var input3 = fixture.GetExampleInput(null);
+                        var input3 = fixture.GetExampleInput();
                         input3.Description = fixture.GetInvalidDescriptionTooLong();
                         invalidInputsList.Add(new object[] {
                         input3,
