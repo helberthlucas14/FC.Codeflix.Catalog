@@ -39,7 +39,7 @@ namespace FC.Codeflix.Catalog.Infra.Data.EF.Repositories
         public async Task Insert(Category aggregate, CancellationToken cancellationToken)
             => await _context.AddAsync(aggregate, cancellationToken);
 
-        public async Task<SeachOutput<Category>> Search(SearchInput input, CancellationToken cancellationToken)
+        public async Task<SearchOutput<Category>> Search(SearchInput input, CancellationToken cancellationToken)
         {
             var toSkip = (input.Page - 1) * input.PerPage;
             var query = _categories.AsNoTracking();
@@ -76,6 +76,22 @@ namespace FC.Codeflix.Catalog.Infra.Data.EF.Repositories
 
             return orderedQuery.ThenBy(x => x.CreatedAt);
         }
+
+        public async Task<IReadOnlyList<Guid>> GetIdsListByIds(
+            List<Guid> ids,
+            CancellationToken cancellationToken
+       )
+                 => await _categories.AsNoTracking()
+                        .Where(category => ids.Contains(category.Id))
+                        .Select(category => category.Id).ToListAsync();
+
+        public async Task<IReadOnlyList<Category>> GetListByIds(
+            List<Guid> ids,
+            CancellationToken cancellationToken
+            )
+            => await _categories.AsNoTracking()
+                .Where(category => ids.Contains(category.Id))
+                .ToListAsync();
 
 
         public Task Update(Category aggregate, CancellationToken _)

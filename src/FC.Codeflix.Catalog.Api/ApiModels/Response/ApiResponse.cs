@@ -1,4 +1,4 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
+﻿using FC.Codeflix.Catalog.Application.Common;
 
 namespace FC.Codeflix.Catalog.Api.ApiModels.Response
 {

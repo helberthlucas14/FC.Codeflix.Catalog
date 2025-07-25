@@ -1,6 +1,6 @@
 ﻿using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 
-namespace FC.Codeflix.Catalog.Application.UseCases.Category.Common
+namespace FC.Codeflix.Catalog.Application.Common
 {
     public abstract class PaginatedListInput
     {
@@ -22,5 +22,8 @@ namespace FC.Codeflix.Catalog.Application.UseCases.Category.Common
             Sort = sort;
             Dir = dir;
         }
+
+        public SearchInput ToSearchInput()
+            => new(Page, PerPage, Search, Sort, Dir);
     }
 }

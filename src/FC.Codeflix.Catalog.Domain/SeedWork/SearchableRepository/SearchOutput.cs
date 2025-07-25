@@ -1,13 +1,13 @@
 ﻿namespace FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository
 {
-    public class SeachOutput<TAggregate>
+    public class SearchOutput<TAggregate>
         where TAggregate : AggregateRoot
     {
         public int CurrentPage { get; set; }
         public int PerPage { get; set; }
         public int Total { get; set; }
         public IReadOnlyList<TAggregate> Items { get; set; }
-        public SeachOutput(
+        public SearchOutput(
             int currentPage,
             int perPage, 
             int total,

@@ -3,7 +3,7 @@
     public interface ISearchableRepository<TAggregate> 
         where TAggregate : AggregateRoot
     {
-        Task<SeachOutput<TAggregate>> Search(
+        Task<SearchOutput<TAggregate>> Search(
             SearchInput input,
             CancellationToken cancellationToken
             );

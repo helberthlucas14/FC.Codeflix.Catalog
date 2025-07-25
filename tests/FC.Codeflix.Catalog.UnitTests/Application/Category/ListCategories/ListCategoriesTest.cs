@@ -27,7 +27,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories
 
             var input = _fixture.GetExampleInput();
 
-            var outputRepositorySearch = new SeachOutput<DomainEntity.Category>(
+            var outputRepositorySearch = new SearchOutput<DomainEntity.Category>(
                  currentPage: input.Page,
                  perPage: input.PerPage,
                  items: (IReadOnlyList<DomainEntity.Category>)listCategories,
@@ -81,7 +81,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories
             var repositoryMock = _fixture.GetRepositoryMock();
             var input = _fixture.GetExampleInput();
 
-            var outputRepositorySearch = new SeachOutput<DomainEntity.Category>(
+            var outputRepositorySearch = new SearchOutput<DomainEntity.Category>(
                  currentPage: input.Page,
                  perPage: input.PerPage,
                  items: new List<DomainEntity.Category>().AsReadOnly(),
@@ -140,7 +140,7 @@ namespace FC.Codeflix.Catalog.UnitTests.Application.Category.ListCategories
             var repositoryMock = _fixture.GetRepositoryMock();
             var listCategories = _fixture.GetExampleCategoriesList();
 
-            var outputRepositorySearch = new SeachOutput<DomainEntity.Category>(
+            var outputRepositorySearch = new SearchOutput<DomainEntity.Category>(
                  currentPage: input.Page,
                  perPage: input.PerPage,
                  items: (IReadOnlyList<DomainEntity.Category>)listCategories,
