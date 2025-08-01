@@ -1,5 +1,5 @@
-﻿
-using FC.Codeflix.Catalog.Domain.Entity;
+﻿using FC.Codeflix.Catalog.Domain.Entity;
+using FC.Codeflix.Catalog.Infra.Data.EF.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FC.Codeflix.Catalog.Infra.Data.EF.Configurations
@@ -8,15 +8,21 @@ namespace FC.Codeflix.Catalog.Infra.Data.EF.Configurations
         : DbContext
     {
         public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Genre> Genres => Set<Genre>();
+        public DbSet<GenresCategories> GenresCategories
+              => Set<GenresCategories>();
 
         public CodeflixCatalogDbContext(
             DbContextOptions<CodeflixCatalogDbContext> options
             ) : base(options) { }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            builder.ApplyConfiguration(new CategoryConfiguration());
+            builder.ApplyConfiguration(new GenreConfiguration());
+
+            builder.ApplyConfiguration(new GenresCategoriesConfiguration());
         }
     }
 }

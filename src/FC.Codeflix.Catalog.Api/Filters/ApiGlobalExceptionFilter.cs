@@ -19,21 +19,29 @@ namespace FC.Codeflix.Catalog.Api.Filters
             var exception = context.Exception;
 
             if (_env.IsDevelopment())
-                details.Extensions.Add("Stacktrace", exception.StackTrace);
+                details.Extensions.Add("StackTrace", exception.StackTrace);
 
             if (exception is EntityValidationException)
             {
-                details.Title = "One or more validation erros ocurred";
+                details.Title = "One or more validation errors ocurred";
                 details.Status = StatusCodes.Status422UnprocessableEntity;
                 details.Type = "UnprocessableEntity";
-                details.Detail = exception.Message;
+                details.Detail = exception!.Message;
             }
             else if (exception is NotFoundException)
             {
                 details.Title = "Not Found";
                 details.Status = StatusCodes.Status404NotFound;
                 details.Type = "NotFound";
-                details.Detail = exception.Message;
+                details.Detail = exception!.Message;
+            }
+
+            else if (exception is RelatedAggregateException)
+            {
+                details.Title = "Invalid Related Aggregate";
+                details.Status = StatusCodes.Status422UnprocessableEntity;
+                details.Type = "RelatedAggregate";
+                details.Detail = exception!.Message;
             }
             else
             {
@@ -45,6 +53,7 @@ namespace FC.Codeflix.Catalog.Api.Filters
 
             context.HttpContext.Response.StatusCode = (int)details.Status;
             context.Result = new ObjectResult(details);
+            context.ExceptionHandled = true;
         }
     }
 }

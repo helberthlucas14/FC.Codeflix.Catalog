@@ -137,6 +137,130 @@ namespace FC.Codeflix.Catalog.Integration.Tests.Infra.Data.EF.Repositories.Categ
         }
 
 
+        [Fact(DisplayName = nameof(ListByIds))]
+        [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+        public async Task ListByIds()
+        {
+            CodeflixCatalogDbContext dbContext = _fixture.CreateDbContext();
+            var exampleCategoriesList = _fixture.GetExampleCategoriesList(15);
+            List<Guid> categoriesIdsToGet = Enumerable.Range(1, 3).Select(_ => {
+                int indexToGet = (new Random()).Next(0, exampleCategoriesList.Count - 1);
+                return exampleCategoriesList[indexToGet].Id;
+            }).Distinct().ToList();
+            await dbContext.AddRangeAsync(exampleCategoriesList);
+            await dbContext.SaveChangesAsync(CancellationToken.None);
+            var categoryRepository = new Repository.CategoryRepository(dbContext);
+            IReadOnlyList<Category> categoriesList = await categoryRepository
+                .GetListByIds(categoriesIdsToGet, CancellationToken.None);
+
+            categoriesList.Should().NotBeNull();
+            categoriesList.Should().HaveCount(categoriesIdsToGet.Count);
+            foreach (Category outputItem in categoriesList)
+            {
+                var exampleItem = exampleCategoriesList.Find(
+                    category => category.Id == outputItem.Id
+                );
+                exampleItem.Should().NotBeNull();
+                outputItem.Name.Should().Be(exampleItem!.Name);
+                outputItem.Description.Should().Be(exampleItem.Description);
+                outputItem.IsActive.Should().Be(exampleItem.IsActive);
+                outputItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
+            }
+        }
+
+        [Fact(DisplayName = nameof(SearchRetursListAndTotal))]
+        [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+        public async Task SearchRetursListAndTotal()
+        {
+            CodeflixCatalogDbContext dbContext = _fixture.CreateDbContext();
+            var exampleCategoriesList = _fixture.GetExampleCategoriesList(15);
+            await dbContext.AddRangeAsync(exampleCategoriesList);
+            await dbContext.SaveChangesAsync(CancellationToken.None);
+            var categoryRepository = new Repository.CategoryRepository(dbContext);
+            var searchInput = new SearchInput(1, 20, "", "", SearchOrder.Asc);
+
+            var output = await categoryRepository.Search(searchInput, CancellationToken.None);
+
+            output.Should().NotBeNull();
+            output.Items.Should().NotBeNull();
+            output.CurrentPage.Should().Be(searchInput.Page);
+            output.PerPage.Should().Be(searchInput.PerPage);
+            output.Total.Should().Be(exampleCategoriesList.Count);
+            output.Items.Should().HaveCount(exampleCategoriesList.Count);
+            foreach (Category outputItem in output.Items)
+            {
+                var exampleItem = exampleCategoriesList.Find(
+                    category => category.Id == outputItem.Id
+                );
+                exampleItem.Should().NotBeNull();
+                outputItem.Name.Should().Be(exampleItem!.Name);
+                outputItem.Description.Should().Be(exampleItem.Description);
+                outputItem.IsActive.Should().Be(exampleItem.IsActive);
+                outputItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
+            }
+        }
+
+        [Fact(DisplayName = nameof(SearchRetursEmptyWhenPersistenceIsEmpty))]
+        [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+        public async Task SearchRetursEmptyWhenPersistenceIsEmpty()
+        {
+            CodeflixCatalogDbContext dbContext = _fixture.CreateDbContext();
+            var categoryRepository = new Repository.CategoryRepository(dbContext);
+            var searchInput = new SearchInput(1, 20, "", "", SearchOrder.Asc);
+
+            var output = await categoryRepository.Search(searchInput, CancellationToken.None);
+
+            output.Should().NotBeNull();
+            output.Items.Should().NotBeNull();
+            output.CurrentPage.Should().Be(searchInput.Page);
+            output.PerPage.Should().Be(searchInput.PerPage);
+            output.Total.Should().Be(0);
+            output.Items.Should().HaveCount(0);
+        }
+
+        [Theory(DisplayName = nameof(SearchRetursPaginated))]
+        [Trait("Integration/Infra.Data", "CategoryRepository - Repositories")]
+        [InlineData(10, 1, 5, 5)]
+        [InlineData(10, 2, 5, 5)]
+        [InlineData(7, 2, 5, 2)]
+        [InlineData(7, 3, 5, 0)]
+        public async Task SearchRetursPaginated(
+            int quantityCategoriesToGenerate,
+            int page,
+            int perPage,
+            int expectedQuantityItems
+        )
+        {
+            CodeflixCatalogDbContext dbContext = _fixture.CreateDbContext();
+            var exampleCategoriesList =
+                _fixture.GetExampleCategoriesList(quantityCategoriesToGenerate);
+            await dbContext.AddRangeAsync(exampleCategoriesList);
+            await dbContext.SaveChangesAsync(CancellationToken.None);
+            var categoryRepository = new Repository.CategoryRepository(dbContext);
+            var searchInput = new SearchInput(page, perPage, "", "", SearchOrder.Asc);
+
+            var output = await categoryRepository.Search(searchInput, CancellationToken.None);
+
+            output.Should().NotBeNull();
+            output.Items.Should().NotBeNull();
+            output.CurrentPage.Should().Be(searchInput.Page);
+            output.PerPage.Should().Be(searchInput.PerPage);
+            output.Total.Should().Be(quantityCategoriesToGenerate);
+            output.Items.Should().HaveCount(expectedQuantityItems);
+            foreach (Category outputItem in output.Items)
+            {
+                var exampleItem = exampleCategoriesList.Find(
+                    category => category.Id == outputItem.Id
+                );
+                exampleItem.Should().NotBeNull();
+                outputItem.Name.Should().Be(exampleItem!.Name);
+                outputItem.Description.Should().Be(exampleItem.Description);
+                outputItem.IsActive.Should().Be(exampleItem.IsActive);
+                outputItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
+            }
+        }
+
+
 
         [Fact(DisplayName = nameof(SearchReturnListAndTotal))]
         [Trait("Integration/Infra.Data", "CategoryRepository -  Repositories")]
