@@ -8,6 +8,8 @@ namespace FC.Codeflix.Catalog.Infra.Data.EF.Configurations
         : DbContext
     {
         public DbSet<Category> Categories => Set<Category>();
+
+        public DbSet<CastMember> CastMembers => Set<CastMember>();
         public DbSet<Genre> Genres => Set<Genre>();
         public DbSet<GenresCategories> GenresCategories
               => Set<GenresCategories>();
@@ -21,7 +23,7 @@ namespace FC.Codeflix.Catalog.Infra.Data.EF.Configurations
         {
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new GenreConfiguration());
-
+            builder.ApplyConfiguration(new CastMemberConfiguration());
             builder.ApplyConfiguration(new GenresCategoriesConfiguration());
         }
     }
