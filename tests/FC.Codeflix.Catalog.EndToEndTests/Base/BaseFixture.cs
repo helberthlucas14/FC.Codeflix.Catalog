@@ -1,6 +1,5 @@
 ﻿using Bogus;
 using FC.Codeflix.Catalog.Infra.Data.EF;
-using FC.Codeflix.Catalog.Infra.Data.EF.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

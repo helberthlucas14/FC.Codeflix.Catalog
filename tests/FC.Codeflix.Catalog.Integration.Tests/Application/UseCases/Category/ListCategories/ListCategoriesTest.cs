@@ -1,11 +1,11 @@
-﻿using FC.Codeflix.Catalog.Infra.Data.EF.Configurations;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
 using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
 using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
 using FC.Codeflix.Catalog.Domain.SeedWork;
+using FC.Codeflix.Catalog.Infra.Data.EF;
 
 namespace FC.Codeflix.Catalog.Integration.Tests.Application.UseCases.Category.ListCategories
 {

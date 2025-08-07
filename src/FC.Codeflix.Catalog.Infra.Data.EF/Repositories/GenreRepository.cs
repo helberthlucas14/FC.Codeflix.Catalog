@@ -2,7 +2,6 @@
 using FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchableRepository;
-using FC.Codeflix.Catalog.Infra.Data.EF.Configurations;
 using FC.Codeflix.Catalog.Infra.Data.EF.Models;
 using Microsoft.EntityFrameworkCore;
 

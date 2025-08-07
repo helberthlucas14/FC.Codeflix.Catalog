@@ -1,5 +1,4 @@
 ﻿using FC.Codeflix.Catalog.Application.Interfaces;
-using FC.Codeflix.Catalog.Infra.Data.EF.Configurations;
 
 namespace FC.Codeflix.Catalog.Infra.Data.EF
 {

@@ -1,7 +1,7 @@
 ﻿using FC.Codeflix.Catalog.EndToEndTests.Base;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.EndToEndTests.Api.Category.Common;
-using FC.Codeflix.Catalog.Infra.Data.EF.Configurations;
+using FC.Codeflix.Catalog.Infra.Data.EF;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Api.Genre.Common;
 public class GenreBaseFixture

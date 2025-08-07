@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using FC.Codeflix.Catalog.Infra.Data.EF.Configurations;
+using FC.Codeflix.Catalog.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
 
 namespace FC.Codeflix.Catalog.Integration.Tests.Base

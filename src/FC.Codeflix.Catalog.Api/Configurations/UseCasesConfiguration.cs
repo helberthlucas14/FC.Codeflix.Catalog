@@ -21,12 +21,11 @@ namespace FC.Codeflix.Catalog.Api.Configurations
          this IServiceCollection services
          )
         {
-            services.AddTransient<
-                ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IGenreRepository, GenreRepository>();
             services.AddTransient<ICastMemberRepository, CastMemberRepository>();
-            services.AddTransient<
-                IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IVideoRepository, VideoRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             return services;
         }
     }

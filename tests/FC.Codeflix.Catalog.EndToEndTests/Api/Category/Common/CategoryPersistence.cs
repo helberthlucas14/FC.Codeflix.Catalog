@@ -1,4 +1,4 @@
-﻿using FC.Codeflix.Catalog.Infra.Data.EF.Configurations;
+﻿using FC.Codeflix.Catalog.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
