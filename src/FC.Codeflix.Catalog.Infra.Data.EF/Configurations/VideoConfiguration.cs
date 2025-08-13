@@ -41,5 +41,7 @@ internal class VideoConfiguration
 
         builder.Property<DateTime>("LastUpdated")
             .ValueGeneratedOnAdd();
+
+        builder.Ignore(video => video.Events);
     }
 }

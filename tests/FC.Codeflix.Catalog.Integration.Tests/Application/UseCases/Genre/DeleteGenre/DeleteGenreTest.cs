@@ -34,7 +34,14 @@ public class DeleteGenreTest
         await dbArrangeContext.Genres.AddRangeAsync(genresExampleList);
         await dbArrangeContext.SaveChangesAsync();
         var actDbContext = _fixture.CreateDbContext(true);
-        var unitOfWork = new UnitOfWork(actDbContext);
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddLogging();
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var eventPublisher = new DomainEventPublisher(serviceProvider);
+        var unitOfWork = new UnitOfWork(
+            actDbContext,
+            eventPublisher,
+            serviceProvider.GetRequiredService<ILogger<UnitOfWork>>());
         var useCase = new UseCase.DeleteGenre(
             new GenreRepository(actDbContext),
             unitOfWork
@@ -69,7 +76,14 @@ public class DeleteGenreTest
         );
         await dbArrangeContext.SaveChangesAsync();
         var actDbContext = _fixture.CreateDbContext(true);
-        var unitOfWork = new UnitOfWork(actDbContext);
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddLogging();
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var eventPublisher = new DomainEventPublisher(serviceProvider);
+        var unitOfWork = new UnitOfWork(
+            actDbContext,
+            eventPublisher,
+            serviceProvider.GetRequiredService<ILogger<UnitOfWork>>());
         var useCase = new UseCase.DeleteGenre(
             new GenreRepository(actDbContext),
             unitOfWork
@@ -96,7 +110,14 @@ public class DeleteGenreTest
         await dbArrangeContext.Genres.AddRangeAsync(genresExampleList);
         await dbArrangeContext.SaveChangesAsync();
         var actDbContext = _fixture.CreateDbContext(true);
-        var unitOfWork = new UnitOfWork(actDbContext);
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddLogging();
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var eventPublisher = new DomainEventPublisher(serviceProvider);
+        var unitOfWork = new UnitOfWork(
+            actDbContext,
+            eventPublisher,
+            serviceProvider.GetRequiredService<ILogger<UnitOfWork>>());
         var useCase = new UseCase.DeleteGenre(
             new GenreRepository(actDbContext),
             unitOfWork

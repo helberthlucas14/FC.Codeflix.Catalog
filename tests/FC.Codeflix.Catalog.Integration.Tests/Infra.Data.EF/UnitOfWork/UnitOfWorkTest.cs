@@ -1,5 +1,11 @@
-﻿using FluentAssertions;
+﻿using FC.Codeflix.Catalog.Application;
+using FC.Codeflix.Catalog.Domain.SeedWork;
+using FC.Codeflix.Catalog.IntegrationTests.Infra.Data.EF.UnitOfWork;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Moq;
 using UnitOfWorkInfra = FC.Codeflix.Catalog.Infra.Data.EF;
 
 namespace FC.Codeflix.Catalog.Integration.Tests.Infra.Data.EF.UnitOfWork
@@ -13,29 +19,51 @@ namespace FC.Codeflix.Catalog.Integration.Tests.Infra.Data.EF.UnitOfWork
             => _fixture = fixture;
 
         [Fact(DisplayName = nameof(Commit))]
-        [Trait("Integration/Infra.Data", "UnitOfWork -  Persistence")]
+        [Trait("Integration/Infra.Data", "UnitOfWork - Persistence")]
         public async Task Commit()
         {
             var dbContext = _fixture.CreateDbContext();
-            var examplecategoriesList = _fixture.GetExampleCategoriesList();
-            await dbContext.AddRangeAsync(examplecategoriesList);
-            var unitOfWork = new UnitOfWorkInfra.UnitOfWork(dbContext);
+            var exampleCategoriesList = _fixture.GetExampleCategoriesList();
+            var categoryWithEvent = exampleCategoriesList.First();
+            var @event = new DomainEventFake();
+            categoryWithEvent.RaiseEvent(@event);
+            var eventHandlerMock = new Mock<IDomainEventHandler<DomainEventFake>>();
+            await dbContext.AddRangeAsync(exampleCategoriesList);
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging();
+            serviceCollection.AddSingleton(eventHandlerMock.Object);
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var eventPublisher = new DomainEventPublisher(serviceProvider);
+            var unitOfWork = new UnitOfWorkInfra.UnitOfWork(dbContext,
+                eventPublisher,
+                serviceProvider.GetRequiredService<ILogger<UnitOfWorkInfra.UnitOfWork>>());
 
             await unitOfWork.Commit(CancellationToken.None);
 
             var assertDbContext = _fixture.CreateDbContext(true);
-            var savedcategories = assertDbContext.Categories
+            var savedCategories = assertDbContext.Categories
                 .AsNoTracking().ToList();
-            savedcategories.Should()
-                .HaveCount(examplecategoriesList.Count);
+            savedCategories.Should()
+                .HaveCount(exampleCategoriesList.Count);
+            eventHandlerMock.Verify(x =>
+                x.HandleAsync(@event, It.IsAny<CancellationToken>()),
+                Times.Once);
+            categoryWithEvent.Events.Should().BeEmpty();
         }
 
+
         [Fact(DisplayName = nameof(Rollback))]
-        [Trait("Integration/Infra.Data", "UnitOfWork -  Persistence")]
+        [Trait("Integration/Infra.Data", "UnitOfWork - Persistence")]
         public async Task Rollback()
         {
             var dbContext = _fixture.CreateDbContext();
-            var unitOfWork = new UnitOfWorkInfra.UnitOfWork(dbContext);
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging();
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var eventPublisher = new DomainEventPublisher(serviceProvider);
+            var unitOfWork = new UnitOfWorkInfra.UnitOfWork(dbContext,
+                eventPublisher,
+                serviceProvider.GetRequiredService<ILogger<UnitOfWorkInfra.UnitOfWork>>());
 
             var task = async ()
                 => await unitOfWork.Rollback(CancellationToken.None);

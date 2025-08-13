@@ -1,9 +1,12 @@
-﻿using FC.Codeflix.Catalog.Application.Exceptions;
+﻿using FC.Codeflix.Catalog.Application;
+using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Infra.Data.EF;
 using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
-using FluentAssertions;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
 using FC.Codeflix.Catalog.Integration.Tests.Application.UseCases.CastMember.Common;
+using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.CastMember.UpdateCastMember;
 
 namespace FC.Codeflix.Catalog.Integration.Tests.Application.UseCases.CastMember.UpdateCastMember;
 
@@ -28,7 +31,14 @@ public class UpdateCastMemberTest
         var newType = _fixture.GetRandomCastMemberType();
         var actDbContext = _fixture.CreateDbContext(true);
         var repository = new CastMemberRepository(actDbContext);
-        var unitOfWork = new UnitOfWork(actDbContext);
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddLogging();
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var eventPublisher = new DomainEventPublisher(serviceProvider);
+        var unitOfWork = new UnitOfWork(
+            actDbContext,
+            eventPublisher,
+            serviceProvider.GetRequiredService<ILogger<UnitOfWork>>());
         var useCase = new UseCase.UpdateCastMember(repository, unitOfWork);
         var input = new UseCase.UpdateCastMemberInput(example.Id, newName, newType);
 
@@ -55,7 +65,14 @@ public class UpdateCastMemberTest
         var newType = _fixture.GetRandomCastMemberType();
         var actDbContext = _fixture.CreateDbContext(true);
         var repository = new CastMemberRepository(actDbContext);
-        var unitOfWork = new UnitOfWork(actDbContext);
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddLogging();
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var eventPublisher = new DomainEventPublisher(serviceProvider);
+        var unitOfWork = new UnitOfWork(
+            actDbContext,
+            eventPublisher,
+            serviceProvider.GetRequiredService<ILogger<UnitOfWork>>());
         var useCase = new UseCase.UpdateCastMember(repository, unitOfWork);
         var input = new UseCase.UpdateCastMemberInput(randomGuid, newName, newType);
 

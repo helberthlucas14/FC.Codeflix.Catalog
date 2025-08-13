@@ -8,5 +8,6 @@ internal class CastMemberConfiguration
 {
     public void Configure(EntityTypeBuilder<CastMember> builder)
     {
+        builder.Ignore(castMember => castMember.Events);
     }
 }

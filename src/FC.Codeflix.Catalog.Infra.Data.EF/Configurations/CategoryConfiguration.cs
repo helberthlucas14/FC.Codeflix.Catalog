@@ -14,6 +14,7 @@ namespace FC.Codeflix.Catalog.Infra.Data.EF.Configurations
                    .HasMaxLength(255);
             builder.Property(category => category.Description)
                    .HasMaxLength(10_000);
+            builder.Ignore(category => category.Events);
         }
     }
 }

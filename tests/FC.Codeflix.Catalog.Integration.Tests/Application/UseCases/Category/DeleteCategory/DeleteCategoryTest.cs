@@ -1,9 +1,12 @@
-﻿using FC.Codeflix.Catalog.Application.Exceptions;
+﻿using FC.Codeflix.Catalog.Application;
+using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Infra.Data.EF;
 using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 using FluentAssertions;
-using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using UseCase = FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
 
 namespace FC.Codeflix.Catalog.Integration.Tests.Application.UseCases.Category.DeleteCategory
 {
@@ -19,8 +22,6 @@ namespace FC.Codeflix.Catalog.Integration.Tests.Application.UseCases.Category.De
         [Trait("Integration/Application", "DeleteCategoy - Use Cases")]
         public async Task DeleteCategory()
         {
-
-
             var dbContext = _fixture.CreateDbContext();
             var exampleCategory = _fixture.GetExampleCategory();
             var exampleList = _fixture.GetExampleCategoriesList(10);
@@ -30,7 +31,14 @@ namespace FC.Codeflix.Catalog.Integration.Tests.Application.UseCases.Category.De
             trackingInfo.State = Microsoft.EntityFrameworkCore.EntityState.Detached;
 
             var repository = new CategoryRepository(dbContext);
-            var unitOfWork = new UnitOfWork(dbContext);
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging();
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var eventPublisher = new DomainEventPublisher(serviceProvider);
+            var unitOfWork = new UnitOfWork(
+                dbContext,
+                eventPublisher,
+                serviceProvider.GetRequiredService<ILogger<UnitOfWork>>());
 
             var input = new UseCase.DeleteCategoryInput(exampleCategory.Id);
 
@@ -55,7 +63,14 @@ namespace FC.Codeflix.Catalog.Integration.Tests.Application.UseCases.Category.De
         {
             var dbContext = _fixture.CreateDbContext();
             var repository = new CategoryRepository(dbContext);
-            var unitOfWork = new UnitOfWork(dbContext);
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging();
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var eventPublisher = new DomainEventPublisher(serviceProvider);
+            var unitOfWork = new UnitOfWork(
+                dbContext,
+                eventPublisher,
+                serviceProvider.GetRequiredService<ILogger<UnitOfWork>>());
             var exampleGuid = Guid.NewGuid();
 
             var input = new UseCase.DeleteCategoryInput(exampleGuid);

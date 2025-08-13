@@ -35,7 +35,14 @@ public class CreateGenreTest
         CreateGenreInput input = _fixture.GetExampleInput();
         CodeflixCatalogDbContext actDbContext = _fixture.CreateDbContext();
 
-        var unitOfWork = new UnitOfWork(actDbContext);
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddLogging();
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var eventPublisher = new DomainEventPublisher(serviceProvider);
+        var unitOfWork = new UnitOfWork(
+            actDbContext,
+            eventPublisher,
+            serviceProvider.GetRequiredService<ILogger<UnitOfWork>>());
         UseCase.CreateGenre createGenre = new UseCase.CreateGenre(
             new GenreRepository(actDbContext),
             unitOfWork,
@@ -73,7 +80,14 @@ public class CreateGenreTest
         input.CategoriesId = exampleCategories
             .Select(category => category.Id).ToList();
         CodeflixCatalogDbContext actDbContext = _fixture.CreateDbContext(true);
-        var unitOfWork = new UnitOfWork(actDbContext);
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddLogging();
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var eventPublisher = new DomainEventPublisher(serviceProvider);
+        var unitOfWork = new UnitOfWork(
+            actDbContext,
+            eventPublisher,
+            serviceProvider.GetRequiredService<ILogger<UnitOfWork>>());
         UseCase.CreateGenre createGenre = new UseCase.CreateGenre(
             new GenreRepository(actDbContext),
             unitOfWork,
@@ -124,7 +138,14 @@ public class CreateGenreTest
         Guid randomGuid = Guid.NewGuid();
         input.CategoriesId.Add(randomGuid);
         CodeflixCatalogDbContext actDbContext = _fixture.CreateDbContext(true);
-        var unitOfWork = new UnitOfWork(actDbContext);
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddLogging();
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var eventPublisher = new DomainEventPublisher(serviceProvider);
+        var unitOfWork = new UnitOfWork(
+            actDbContext,
+            eventPublisher,
+            serviceProvider.GetRequiredService<ILogger<UnitOfWork>>());
         UseCase.CreateGenre createGenre = new UseCase.CreateGenre(
             new GenreRepository(actDbContext),
             unitOfWork,

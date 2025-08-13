@@ -92,7 +92,7 @@ public class Video : AggregateRoot
     public void UpdateMedia(string path)
     {
         Media = new Media(path);
-        //RaiseEvent(new VideoUploadedEvent(Id, path));
+        RaiseEvent(new VideoUploadedEvent(Id, path));
     }
 
     public void UpdateTrailer(string path)
