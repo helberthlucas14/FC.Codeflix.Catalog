@@ -2,6 +2,7 @@
 using FC.Codeflix.Catalog.Infra.Messaging.Configuration;
 using FC.Codeflix.Catalog.Infra.Messaging.JsonPolicies;
 using Microsoft.Extensions.Options;
+using RabbitMQ.Client;
 using System.Text.Json;
 
 namespace FC.Codeflix.Catalog.Infra.Messaging.Producer;

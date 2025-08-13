@@ -1,5 +1,7 @@
 ﻿using FC.Codeflix.Catalog.Api.Configurations.Polices;
+using FC.Codeflix.Catalog.Application.UseCases.Video.Common;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -99,6 +101,22 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Base
             var parametersDictionary = Newtonsoft.Json.JsonConvert
                 .DeserializeObject<Dictionary<string, string>>(parameterJson);
             return QueryHelpers.AddQueryString(route, parametersDictionary!);
+        }
+
+        internal async Task<(HttpResponseMessage?, TOutput?)>
+    PostFormData<TOutput>(string route, FileInput file)
+        where TOutput : class
+        {
+            var fileContent = new StreamContent(file.FileStream);
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+
+            using var content = new MultipartFormDataContent
+        {
+            { fileContent, "media_file", $"media.{file.Extension}" }
+        };
+            var response = await _httpClient.PostAsync(route, content);
+            var output = await GetOutput<TOutput>(response);
+            return (response, output);
         }
 
     }
