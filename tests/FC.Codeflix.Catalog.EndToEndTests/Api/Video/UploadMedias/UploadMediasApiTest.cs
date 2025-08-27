@@ -51,7 +51,7 @@ public class UploadMediasApiTest : IDisposable
         var videoFromDb = await _fixture.VideoPersistence.GetById(videoId);
         videoFromDb.Should().NotBeNull();
         videoFromDb!.Banner!.Path.Should().Be(expectedFileName);
-        _fixture.WebApplicationFactory.StorageClient!.Verify(
+        _fixture.WebAppFactory.StorageClient!.Verify(
             x => x.UploadObjectAsync(
                 It.IsAny<string>(), expectedFileName,
                 file.ContentType,
@@ -87,7 +87,7 @@ public class UploadMediasApiTest : IDisposable
         var videoFromDb = await _fixture.VideoPersistence.GetById(videoId);
         videoFromDb.Should().NotBeNull();
         videoFromDb!.Thumb!.Path.Should().Be(expectedFileName);
-        _fixture.WebApplicationFactory.StorageClient!.Verify(
+        _fixture.WebAppFactory.StorageClient!.Verify(
             x => x.UploadObjectAsync(
                 It.IsAny<string>(), expectedFileName,
                 file.ContentType,
@@ -123,7 +123,7 @@ public class UploadMediasApiTest : IDisposable
         var videoFromDb = await _fixture.VideoPersistence.GetById(videoId);
         videoFromDb.Should().NotBeNull();
         videoFromDb!.ThumbHalf!.Path.Should().Be(expectedFileName);
-        _fixture.WebApplicationFactory.StorageClient!.Verify(
+        _fixture.WebAppFactory.StorageClient!.Verify(
             x => x.UploadObjectAsync(
                 It.IsAny<string>(), expectedFileName,
                 file.ContentType,
@@ -159,7 +159,7 @@ public class UploadMediasApiTest : IDisposable
         var videoFromDb = await _fixture.VideoPersistence.GetById(videoId);
         videoFromDb.Should().NotBeNull();
         videoFromDb!.Trailer!.FilePath.Should().Be(expectedFileName);
-        _fixture.WebApplicationFactory.StorageClient!.Verify(
+        _fixture.WebAppFactory.StorageClient!.Verify(
             x => x.UploadObjectAsync(
                 It.IsAny<string>(), expectedFileName,
                 file.ContentType,
@@ -195,7 +195,7 @@ public class UploadMediasApiTest : IDisposable
         var videoFromDb = await _fixture.VideoPersistence.GetById(videoId);
         videoFromDb.Should().NotBeNull();
         videoFromDb!.Media!.FilePath.Should().Be(expectedFileName);
-        _fixture.WebApplicationFactory.StorageClient!.Verify(
+        _fixture.WebAppFactory.StorageClient!.Verify(
             x => x.UploadObjectAsync(
                 It.IsAny<string>(), expectedFileName,
                 file.ContentType,

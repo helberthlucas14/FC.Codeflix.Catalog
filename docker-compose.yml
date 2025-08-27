@@ -1,6 +1,26 @@
-version: '3.4'
+version: '3.8'
 
 services:
+  # app:
+  #   container_name: adm_videos_app
+  #   image: igorgomes96/fc3-admin-catalogo-de-videos-c-sharp:latest
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./src/FC.Codeflix.Catalog.Api/gcp_credentials.json:/app/gcp_credentials.json
+  #   ports:
+  #     - 5000:80
+  #   environment:
+  #     - ASPNETCORE_URLS=http://+:80
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - GOOGLE_APPLICATION_CREDENTIALS=gcp_credentials.json
+  #   depends_on:
+  #     - fc.codeflix.catalog.fb
+  #     - rabbitmq
+  #     - keycloak
+  #     - filebeat
+  #   labels:
+  #     filebeat_collector: true
+  #     decode_log_event_to_json_object: true
 
   fc.codeflix.catalog.fb:
     container_name: catalogdb
@@ -26,6 +46,33 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
+    networks:
+      - service_catalog
+
+  keycloak:
+    container_name: adm_videos_keycloak
+    image: quay.io/keycloak/keycloak:26.3.3
+    hostname: keycloak
+    restart: unless-stopped
+    volumes:
+      - .docker/keycloak:/opt/keycloak/data/import
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_DB=mysql
+      - KC_DB_URL_HOST=catalogdb
+      - KC_DB_URL_PORT=3306
+      - KC_DB_SCHEMA=keycloak
+      - KC_DB_USERNAME=root
+      - KC_DB_PASSWORD=root
+    ports:
+      - 8080:8080
+    command:
+      - start-dev
+    networks:
+      - service_catalog
+    depends_on:
+      - fc.codeflix.catalog.fb
 
 networks:
   service_catalog:

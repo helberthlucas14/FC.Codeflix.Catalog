@@ -8,13 +8,19 @@ builder.Services
        .AddRabbitMQ(builder.Configuration)
        .AddMessageProducer()
        .AddMessageConsumer()
-       .AddAndConfigureControllers()
        .AddStorage(builder.Configuration)
-     ;
+       .AddSecurity(builder.Configuration)
+       .AddAndConfigureControllers(builder.Configuration);
+     //  .AddCors(p => p.AddPolicy("CORS", builder =>
+     //  {
+     //      builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+     //  }))
+     //;
 
 var app = builder.Build();
 app.UseDocumentation();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
