@@ -30,7 +30,3 @@ git clone https://github.com/helberthlucas14/FC.Codeflix.Catalog.git
 - Docker Desktop (para integração do Docker com o Visual Studio)
 
 <br /><br />
----
-
-| [<img src="https://github.com/wilsonneto-dev.png" width="75px;"/>][1] |
-| :-: |
