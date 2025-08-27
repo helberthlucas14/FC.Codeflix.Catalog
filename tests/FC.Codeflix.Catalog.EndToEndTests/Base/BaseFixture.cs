@@ -1,28 +1,35 @@
 ﻿using Bogus;
 using FC.Codeflix.Catalog.Infra.Data.EF;
+using Keycloak.AuthServices.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Base
 {
-    public class BaseFixture
+    public class BaseFixture : IDisposable
     {
         protected Faker Faker { get; set; }
 
-        public CustomWebApplicationFactory<Program> WebApplicationFactory { get; set; }
+        public CustomWebApplicationFactory<Program> WebAppFactory { get; set; }
         public HttpClient HttpClient { get; set; }
         public ApiClient ApiClient { get; set; }
         private readonly string _dbConnectionString;
         public BaseFixture()
         {
             Faker = new Faker("pt_BR");
-            WebApplicationFactory = new CustomWebApplicationFactory<Program>();
-            HttpClient = WebApplicationFactory.CreateClient();
-            ApiClient = new ApiClient(HttpClient);
-            var configuration = WebApplicationFactory.Services
-                 .GetService(typeof(IConfiguration));
+            WebAppFactory = new CustomWebApplicationFactory<Program>();
+            HttpClient = WebAppFactory.CreateClient();
+            var configuration = WebAppFactory.Services
+                .GetRequiredService<IConfiguration>();
+            var x = configuration.GetSection(KeycloakAuthenticationOptions.Section);
+            var keycloakOptions = configuration
+                .GetSection(KeycloakAuthenticationOptions.Section)
+                .Get<KeycloakAuthenticationOptions>();
+            ApiClient = new ApiClient(HttpClient, keycloakOptions);
             ArgumentNullException.ThrowIfNull(configuration);
-            _dbConnectionString = ((IConfiguration)configuration).GetConnectionString("CatalogDb");
+            _dbConnectionString = configuration
+                .GetConnectionString("CatalogDb");
         }
 
         public CodeflixCatalogDbContext CreateDbContext()
@@ -46,6 +53,11 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Base
             var context = CreateDbContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
+        }
+
+        public void Dispose()
+        {
+            WebAppFactory.Dispose();
         }
     }
 }

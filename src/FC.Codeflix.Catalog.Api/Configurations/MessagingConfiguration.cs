@@ -18,8 +18,8 @@ public static class MessagingConfiguration
 
         services.AddSingleton(sp =>
         {
-            RabbitMQConfiguration config = sp
-                .GetRequiredService<IOptions<RabbitMQConfiguration>>().Value;
+            var config = sp.GetRequiredService<IOptions<RabbitMQConfiguration>>().Value;
+
             var factory = new ConnectionFactory
             {
                 HostName = config.Hostname,
@@ -27,7 +27,20 @@ public static class MessagingConfiguration
                 Password = config.Password,
                 Port = config.Port
             };
-            return factory.CreateConnection();
+
+            var connection = factory.CreateConnection();
+
+            using (var channel = connection.CreateModel())
+            {
+                channel.ExchangeDeclare("video.events", ExchangeType.Direct, durable: true);
+
+                channel.QueueDeclare("video.encoded.queue", durable: true, exclusive: false, autoDelete: false);
+                channel.QueueDeclare("video.created.queue", durable: true, exclusive: false, autoDelete: false);
+
+                channel.QueueBind("video.encoded.queue", "video.events", "video.encoded");
+                channel.QueueBind("video.created.queue", "video.events", "video.created");
+            }
+            return connection;
         });
 
         services.AddSingleton<ChannelManager>();

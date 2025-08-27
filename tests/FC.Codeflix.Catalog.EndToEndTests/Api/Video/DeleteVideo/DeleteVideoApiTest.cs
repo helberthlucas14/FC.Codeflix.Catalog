@@ -53,14 +53,14 @@ public class DeleteVideoApiTest : IDisposable
         var actualMediaCount = await _fixture.VideoPersistence
             .GetMediaCount();
         actualMediaCount.Should().Be(expectedMediaCount);
-        _fixture.WebApplicationFactory.StorageClient!.Verify(
+        _fixture.WebAppFactory.StorageClient!.Verify(
             x => x.DeleteObjectAsync(
                 It.IsAny<string>(),
                 It.Is<string>(fileName => allMedias.Contains(fileName)),
                 It.IsAny<DeleteObjectOptions>(),
                 It.IsAny<CancellationToken>()),
             Times.Exactly(5));
-        _fixture.WebApplicationFactory.StorageClient!.Verify(
+        _fixture.WebAppFactory.StorageClient!.Verify(
             x => x.DeleteObjectAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
@@ -126,14 +126,14 @@ public class DeleteVideoApiTest : IDisposable
         var actualMediaCount = await _fixture.VideoPersistence
             .GetMediaCount();
         actualMediaCount.Should().Be(expectedMediaCount);
-        _fixture.WebApplicationFactory.StorageClient!.Verify(
+        _fixture.WebAppFactory.StorageClient!.Verify(
             x => x.DeleteObjectAsync(
                 It.IsAny<string>(),
                 It.Is<string>(fileName => allMedias.Contains(fileName)),
                 It.IsAny<DeleteObjectOptions>(),
                 It.IsAny<CancellationToken>()),
             Times.Exactly(5));
-        _fixture.WebApplicationFactory.StorageClient!.Verify(
+        _fixture.WebAppFactory.StorageClient!.Verify(
             x => x.DeleteObjectAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
