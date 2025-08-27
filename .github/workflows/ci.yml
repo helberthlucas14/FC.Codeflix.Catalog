@@ -41,10 +41,10 @@ jobs:
         resource: http://localhost:8444/realms/fc3-codeflix/.well-known/openid-configuration
 
     - name: Test
-      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test --no-build --verbosity normal  --logger "trx;LogFileName=test-results.trx"
 
     - name: Test Report
-      uses: dorny/test-reporter@v2.1.1
+      uses: dorny/test-reporter@v2
       if: always()
       with:
         name: Reports Tests
