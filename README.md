@@ -34,7 +34,7 @@ git clone https://github.com/helberthlucas14/FC.Codeflix.Catalog.git
 
 | [<img src="https://github.com/wilsonneto-dev.png" width="75px;"/>][1] |
 | :-: |
-|[Tutor Wilson Neto][1]|
+
 
 
 [1]: https://github.com/wilsonneto-dev
