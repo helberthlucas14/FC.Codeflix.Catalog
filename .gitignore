@@ -26,3 +26,4 @@ Thumbs.db
 
 # Resultados de Teste
 TestResults
+/tests/FC.Codeflix.Catalog.EndToEndTests/gcp_credencials.json
