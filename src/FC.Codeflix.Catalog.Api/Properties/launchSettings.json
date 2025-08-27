@@ -1,24 +1,24 @@
 {
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:22015",
+      "sslPort": 44332
+    }
+  },
   "profiles": {
-    "http": {
+    "FC.Codeflix.Catalog.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "GOOGLE_APPLICATION_CREDENTIALS": "gcp_credentials.json"
       },
-      "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5250"
-    },
-    "https": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7184;http://localhost:5250"
+      "applicationUrl": "https://localhost:7097;http://localhost:5097",
+      "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -28,26 +28,16 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Container (Dockerfile)": {
+    "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
-      "environmentVariables": {
-        "ASPNETCORE_HTTPS_PORTS": "8081",
-        "ASPNETCORE_HTTP_PORTS": "8080"
-      },
       "publishAllPorts": true,
       "useSSL": true,
-      "DockerFileRunArguments": "--network service_catalog -p 7184:8081 -p 7183:8080"
-    }
-  },
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:64643",
-      "sslPort": 44334
+      "DockerfileRunArguments": "--network service_catalog -p 4040:80 -p 5050:443",
+      "environmentVariables": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "gcp_credentials.json"
+      }
     }
   }
 }
