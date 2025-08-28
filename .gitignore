@@ -29,3 +29,8 @@ TestResults
 /tests/FC.Codeflix.Catalog.EndToEndTests/gcp_credencials.json
 
 gcp_credencials.json
+
+# docker volumes
+elastic/.docker/es*
+.docker/filebeat/registry/*
+.docker/filebeat/meta.json

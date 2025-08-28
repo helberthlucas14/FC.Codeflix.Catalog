@@ -3,7 +3,7 @@ version: '3.8'
 services:
   app:
     container_name: adm_videos_app
-    image: helberthlucas/fc.codeflix.catalog
+    image: helberthlucas14/fc.codeflix.catalog
     restart: unless-stopped
     volumes:
       - ./src/FC.Codeflix.Catalog.Api/gcp_credentials.json:/app/gcp_credentials.json
@@ -73,6 +73,18 @@ services:
       - service_catalog
     depends_on:
       - fc.codeflix.catalog.fb
+
+  filebeat:
+    container_name: adm_videos_filebeat
+    image: docker.elastic.co/beats/filebeat:9.1.2
+    command: ["--strict.perms=false"]
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro           # Docker logs
+      - /var/run/docker.sock:/var/run/docker.sock:ro                       # Additional information about containers
+      - .docker/filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro # Configuration file
+      - .docker/filebeat:/usr/share/filebeat/data:rw                    # Persistence data
+    user: root                                                             # Allow access to log files and docker.sock
+    restart: on-failure
 
 networks:
   service_catalog:

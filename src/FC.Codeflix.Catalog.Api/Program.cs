@@ -10,12 +10,12 @@ builder.Services
        .AddMessageConsumer()
        .AddStorage(builder.Configuration)
        .AddSecurity(builder.Configuration)
-       .AddAndConfigureControllers(builder.Configuration);
-     //  .AddCors(p => p.AddPolicy("CORS", builder =>
-     //  {
-     //      builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-     //  }))
-     //;
+       .AddAndConfigureControllers(builder.Configuration)
+       .AddCors(p => p.AddPolicy("CORS", builder =>
+       {
+           builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+       }))
+     ;
 
 var app = builder.Build();
 app.UseDocumentation();
