@@ -11,7 +11,7 @@ services:
       - 5000:80
     environment:
       - ASPNETCORE_URLS=http://+:80
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Docker
       - GOOGLE_APPLICATION_CREDENTIALS=gcp_credentials.json
     depends_on:
       - fc.codeflix.catalog.fb
@@ -55,26 +55,26 @@ services:
     container_name: adm_videos_keycloak
     image: quay.io/keycloak/keycloak:26.3.3
     hostname: keycloak
-    restart: unless-stopped
-    volumes:
-      - .docker/keycloak:/opt/keycloak/data/import
     environment:
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
       - KC_DB=mysql
-      - KC_DB_URL_HOST=catalogdb
+      - KC_DB_URL_HOST=fc.codeflix.catalog.fb
       - KC_DB_URL_PORT=3306
       - KC_DB_SCHEMA=keycloak
       - KC_DB_USERNAME=root
       - KC_DB_PASSWORD=root
+    volumes:
+      - .docker/keycloak:/opt/keycloak/data/import
     ports:
       - 8080:8080
+    restart: unless-stopped
     command: >
-       start-dev --import-realm
-    networks:
-      - service_catalog
+      start-dev --import-realm --hostname-url=http://keycloak:8080
     depends_on:
       - fc.codeflix.catalog.fb
+    networks:   
+      - service_catalog
 
   filebeat:
     container_name: adm_videos_filebeat
