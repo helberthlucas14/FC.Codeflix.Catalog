@@ -11,6 +11,10 @@ namespace FC.Codeflix.Catalog.Api.Configurations
             )
         {
             services.AddDbConnection(configuration);
+            services.AddHttpLogging(logging =>
+            {
+                logging.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
+            });
             return services;
         }
 

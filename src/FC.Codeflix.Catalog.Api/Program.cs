@@ -18,8 +18,11 @@ builder.Services
      ;
 
 var app = builder.Build();
+app.UseHttpLogging();
+app.MigrateDatabase();
 app.UseDocumentation();
 //app.UseHttpsRedirection();
+app.UseCors("CORS");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
